@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public class OverHead {
 
-	String title, author;
+	private String title, author;
 	
 	public OverHead() {
 		this("","");
@@ -64,7 +64,7 @@ public class OverHead {
 	}
 	
 	public String getTitle() {
-		return author;
+		return title;
 	}
 	
 }
