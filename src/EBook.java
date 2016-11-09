@@ -67,13 +67,12 @@ public class EBook {
 			f.close();
 			
 			// Now we add files to META_INF
-			overHead.makeContainer();
+			return overHead.makeContainer();
 
 		} catch (Exception ie) {
 			ie.printStackTrace();
+			return null;
 		}
-		
-		return null;
 	}
 	
 	public boolean zipBook() {
