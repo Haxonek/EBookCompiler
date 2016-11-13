@@ -18,10 +18,7 @@ public class EBook {
 //		List<Section> chapters = new ArrayList<Section>();
 		OverHead overHead;
 		
-		System.out.println("EBook class started");
-		
-		
-		
+		System.out.println("Please enter some general information:");
 		
 		// Read in static information
 		System.out.print("Book Title: ");
@@ -62,8 +59,12 @@ public class EBook {
 	public static void createEbook(OverHead oh) {
 
 		try {
+			// Create epub folder; will be book name
+			File mainFolder = new File("EPUB");
+			mainFolder.mkdir();
+			
 			// Create a folder OEPBS, META-INF, and file mimetype
-			File OEPBS = new File("EPUB/EPUB");
+			File OEPBS = new File("EPUB/OEPBS");
 			OEPBS.mkdir();
 
 			File META_INF = new File("EPUB/META-INF");
