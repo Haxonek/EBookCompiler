@@ -4,13 +4,18 @@ import java.io.IOException;
 
 public class OverHead {
 
+	// default epub name is equal to title
 	private String title, author, epubName;
 	
 	public OverHead() {
-		this("","");
+		this("","","");
 	}
 
 	public OverHead(String title, String author) {
+		this(title, author, title);
+	}
+	
+	public OverHead(String title, String author, String epubName) {
 		this.title = title;
 		this.author = author;
 		this.epubName = title.trim();
@@ -98,6 +103,14 @@ public class OverHead {
 	
 	public String getTitle() {
 		return title;
+	}
+	
+	public void setEpubName(String epubName) {
+		this.epubName = epubName;
+	}
+	
+	public String setEpubName() {
+		return epubName;
 	}
 	
 }

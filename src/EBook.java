@@ -8,25 +8,37 @@ import java.io.IOException;
 
 public class EBook {
 	
-//	Scanner in = new Scanner(System.in);
+	Scanner in = new Scanner(System.in);
 //	List<Section> chapters = new ArrayList<Section>();
-//	OverHead overHead;
+	OverHead overHead;
+	
+	public EBook() {
+		this("","","");
+	}
+	
+	public EBook(String title, String author, String epubName) {
+		overHead = new OverHead(title, author, epubName);
+	}
+	
+	
 	
 	public static void main(String args[]) {
 		
-		Scanner in = new Scanner(System.in);
-//		List<Section> chapters = new ArrayList<Section>();
-		OverHead overHead;
+		EBook eb = new EBook();
+		
+//		Scanner in = new Scanner(System.in);
+////		List<Section> chapters = new ArrayList<Section>();
+//		OverHead overHead;
 		
 		System.out.println("Please enter some general information:");
 		
 		// Read in static information
 		System.out.print("Book Title: ");
-		String title = in.nextLine();
+		String title = eb.in.nextLine();
 		System.out.print("Author Name: ");
-		String author = in.nextLine();
+		String author = eb.in.nextLine();
 		
-		overHead = new OverHead(title, author);
+		eb.overHead = new OverHead(title, author);
 		Section sections = new Section();
 		
 		// create a new section for each arg.  For now just use own text
@@ -34,11 +46,11 @@ public class EBook {
 		// add each to list of chapters
 		
 		// create ebook
-		createEbook(overHead);
-		createSections(sections);
+		eb.createEbook(eb.overHead);
+		eb.createSections(sections);
 		
 		// zip up ebook
-		zipBook();
+		eb.zipBook();
 		
 //		// rename ebook file
 //		int PerLoc = book.getName().indexOf('.');
@@ -53,10 +65,10 @@ public class EBook {
 //			e.printStackTrace();
 //		}
 		
-		in.close();
+		eb.in.close();
 	}
 
-	public static void createEbook(OverHead oh) {
+	public void createEbook(OverHead oh) {
 
 		try {
 			// Create epub folder; will be book name
@@ -94,7 +106,7 @@ public class EBook {
 		}
 	}
 	
-	public static void createSections(Section s) {
+	public void createSections(Section s) {
 		try {
 			// WILL BE DIFFERENT LATER
 			s.makeChapter();
@@ -103,7 +115,7 @@ public class EBook {
 		}
 	}
 	
-	public static boolean zipBook() {
+	public boolean zipBook() {
 		return false;
 	}
 	
