@@ -46,17 +46,18 @@ public class EBook {
 		
 		// create ebook
 		eb.createEbook(eb.overHead);
-		eb.createSections(sections);
+//		eb.createSections(sections);
 		
 		// zip up ebook
-    	eb.generateFileList(new File("EPUB"));
-    	eb.zipEBook(eb.overHead.getEpubName() + ".epub");
+//    	eb.generateFileList(new File("EPUB"));
+//    	eb.zipEBook(eb.overHead.getEpubName() + ".epub");
 		
 		eb.in.close();
 	}
 
 	public void createEbook(OverHead oh) {
 
+		// Set up initial folders and mimetype file
 		try {
 			// Create epub folder; will be book name
 			File mainFolder = new File("EPUB");
@@ -82,14 +83,24 @@ public class EBook {
 			// create the three chapters; will automate later
 			
 			
-			// Now we add files to META_INF
-//			return overHead.makeContainer();
-
-			
-			
-		} catch (Exception ie) {
+		} catch (IOException ie) {
 			ie.printStackTrace();
 		}
+		
+		Section s = new Section();
+		
+		// Add each of the section(s)
+		try {
+			// WILL BE DIFFERENT LATER
+			s.makeChapter();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		// zip up ebook and set file name
+		generateFileList(new File("EPUB"));
+    	zipEBook(overHead.getEpubName() + ".epub");
+    	
 	}
 	
 	public void createSections(Section s) {
