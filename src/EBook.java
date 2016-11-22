@@ -1,15 +1,20 @@
-//import java.util.List;
-//import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-//import java.nio.file.Files;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
+
 
 public class EBook {
 	
+	List<String> fileList = new ArrayList<String>();
 	Scanner in = new Scanner(System.in);
-//	List<Section> chapters = new ArrayList<Section>();
 	OverHead overHead;
 	
 	public EBook() {
@@ -20,15 +25,9 @@ public class EBook {
 		overHead = new OverHead(title, author, epubName);
 	}
 	
-	
-	
 	public static void main(String args[]) {
 		
 		EBook eb = new EBook();
-		
-//		Scanner in = new Scanner(System.in);
-////		List<Section> chapters = new ArrayList<Section>();
-//		OverHead overHead;
 		
 		System.out.println("Please enter some general information:");
 		
@@ -50,20 +49,8 @@ public class EBook {
 		eb.createSections(sections);
 		
 		// zip up ebook
-		eb.zipBook();
-		
-//		// rename ebook file
-//		int PerLoc = book.getName().indexOf('.');
-//		// I removed book and can't figure out what type it was :/
-		// Wait it was File book; may have to do some other way
-		
-//		// copies it to the new file name, minus old extention
-//		try {
-//			File newFile = new File(book.getParent(), book.getName().substring(0, PerLoc) + ".epub");
-//			Files.move(book.toPath(), newFile.toPath());
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
+    	eb.generateFileList(new File("EPUB"));
+    	eb.zipEBook(eb.overHead.getEpubName() + ".epub");
 		
 		eb.in.close();
 	}
@@ -102,7 +89,6 @@ public class EBook {
 			
 		} catch (Exception ie) {
 			ie.printStackTrace();
-//			return null;
 		}
 	}
 	
@@ -114,25 +100,95 @@ public class EBook {
 			e.printStackTrace();
 		}
 	}
+
+	public void setAuthor(String author) {
+    	overHead.setAuthor(author);
+    }
+
+    public void setTitle(String title) {
+    	overHead.setTitle(title);
+    }
+
+    public String getTitle() {
+    	return overHead.getTitle();
+    }
+
+    public String getAuthor() {
+    	return overHead.getAuthor();
+    }
 	
-	public boolean zipBook() {
-		return false;
-	}
-	
-//	public void setAuthor(String author) {
-//		overHead.setAuthor(author);
-//	}
-//	
-//	public void setTitle(String title) {
-//		overHead.setTitle(title);
-//	}
-//	
-//	public String getTitle() {
-//		return overHead.getTitle();
-//	}
-//
-//	public String getAuthor() {
-//		return overHead.getAuthor();
-//	}
-	
+    /**
+     * Zip it
+     * @param zipFile output ZIP file location
+     */
+    private void zipEBook(String zipFile){
+
+    	byte[] buffer = new byte[1024];
+
+    	System.out.println("Generating zip file");
+
+    	try{
+
+    		FileOutputStream fos = new FileOutputStream(zipFile);
+    		ZipOutputStream zos = new ZipOutputStream(fos);
+
+    		System.out.println("Output to Zip : " + zipFile);
+
+    		for(String file : this.fileList){
+
+    			System.out.println("File Added : " + file);
+    			ZipEntry ze= new ZipEntry(file);
+    			zos.putNextEntry(ze);
+
+    			FileInputStream in =
+    					new FileInputStream(File.separator + file);
+
+    			int len;
+    			while ((len = in.read(buffer)) > 0) {
+    				zos.write(buffer, 0, len);
+    			}
+
+    			in.close();
+    		}
+
+    		zos.closeEntry();
+    		//remember close it
+    		zos.close();
+
+    		System.out.println("Done");
+    	}catch(IOException ex){
+    		ex.printStackTrace();
+    	}
+    }
+
+    /**
+     * Traverse a directory and get all files,
+     * and add the file into fileList
+     * @param node file or directory
+     */
+    private void generateFileList(File node){
+    	
+    	//add file only
+    	if(node.isFile()){
+    		fileList.add(generateZipEntry(node.getAbsoluteFile().toString()));
+    	}
+
+    	if(node.isDirectory()){
+    		String[] subNote = node.list();
+    		for(String filename : subNote){
+    			generateFileList(new File(node, filename));
+    		}
+    	}
+
+    }
+
+    /**
+     * Format the file path for zip
+     * @param file file path
+     * @return Formatted file path
+     */
+    private String generateZipEntry(String file){
+    	return file.substring(1, file.length());
+    }
+
 }

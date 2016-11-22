@@ -31,7 +31,6 @@ public class OverHead {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("General file created.");
 	}
 	
 	public void makeCSS() throws IOException {
@@ -109,7 +108,7 @@ public class OverHead {
 		this.epubName = epubName;
 	}
 	
-	public String setEpubName() {
+	public String getEpubName() {
 		return epubName;
 	}
 	
