@@ -43,15 +43,15 @@ public class OverHead {
 	 * This method runs all of the individual file creation methods and
 	 * constructs the ebook using the set author and file name.
 	 * 
-	 * @param n The number of chapters being created in the book; should be
+	 * @param numSections The number of chapters being created in the book; should be
 	 * represented with args.length + 1
 	 */
-	public void makeOverhead(int n) {
+	public void makeOverhead(int numSections) {
 		try {
-			makeContent(n);
+			makeContent(numSections);
 			makeCSS();
-			makeToc(n);
-			makeTox(n);
+			makeToc(numSections);
+			makeTox(numSections);
 			makeContainer();
 			makeCopyright();
 		} catch (IOException e) {

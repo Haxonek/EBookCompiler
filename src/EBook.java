@@ -78,7 +78,7 @@ public class EBook {
 			f.close();
 			
 			// create other files
-			oh.makeOverhead(2);
+			oh.makeOverhead(2); // LATER RENDITION: args.length + 1
 			
 			// create the three chapters; will automate later
 			
@@ -112,20 +112,61 @@ public class EBook {
 		}
 	}
 
+	/**
+	 * Method sets the author within the OverHead class.  Will NOT modify the
+	 * author in past compilations of your ebook.
+	 * 
+	 * @param author The name of the writer for the book
+	 */
 	public void setAuthor(String author) {
     	overHead.setAuthor(author);
     }
 
+	/**
+	 * Method sets the author within the OverHead class.  Will NOT modify the
+	 * title in past compilations of your ebook, only future renditions.
+	 * 
+	 * @param title The name of the writer for the book
+	 */
     public void setTitle(String title) {
     	overHead.setTitle(title);
     }
+    
+    /**
+	 * Method sets the filename within the OverHead class.  Will NOT modify the
+	 * filename in past compilations of your ebook.
+	 * 
+	 * @param epubName The name of the writer for the book
+	 */
+    public void setEbookName(String epubName) {
+    	overHead.setEpubName(epubName);
+    }
 
+    /**
+     * returns the set title in the ebook
+     * 
+     * @return a string containing the book title
+     */
     public String getTitle() {
     	return overHead.getTitle();
     }
 
+    /**
+     * Returns the author name
+     * 
+     * @return a string containing the book author currently set
+     */
     public String getAuthor() {
     	return overHead.getAuthor();
+    }
+    
+    /**
+     * Returns the set filename for the ebook
+     * 
+     * @return the set filename for the ebook
+     */
+    public String getEbookName() {
+    	overHead.getEpubName();
     }
 	
     /**
