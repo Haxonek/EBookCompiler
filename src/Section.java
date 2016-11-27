@@ -4,9 +4,40 @@ import java.io.IOException;
 
 public class Section {
 
+	/**
+	 * Empty class constructor
+	 */
 	public Section() {}
 
+	/**
+	 * Takes in a list of file names (plain text; .txt) and re-adds them as
+	 * .xhtml files, inputting the minimal required html for the project.
+	 * 
+	 * @param fn A list of plain text files containing the chapters.
+	 * @throws IOException Likely thrown if you encounter an error opening a file
+	 *  
+	 * */
+	public void makeChapter(String[] fn) throws IOException {
+		
+		for (int i = 0; i < fn.length; i++) {
+			// find the file and open it up
+			
+			// create the new .xhtml file
+			
+			// add the new file, adding html as we go along + the chapter name
+		}
+		
+	}
+	
 	public void makeChapter() throws IOException {
+		
+		/**
+		 * The way this will be set up is we'll pass a List of file names
+		 * through, then we'll add each file name.  This list size will also 
+		 * be passed to OverHead to form the TOC, since all the chapter names
+		 * will follow a format.  Done in above method
+		 * 
+		 * */
 
 		// Again we're just making three files; we'll update later
 		File ch1 = new File("EPUB/OEPBS/chapter_1.xhtml");
