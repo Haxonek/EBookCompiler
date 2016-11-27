@@ -78,7 +78,7 @@ public class EBook {
 			f.close();
 			
 			// create other files
-			oh.makeOverhead();
+			oh.makeOverhead(2);
 			
 			// create the three chapters; will automate later
 			
