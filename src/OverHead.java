@@ -67,7 +67,7 @@ public class OverHead {
 		// make css template
 		File css = new File("EPUB/OEPBS/CSS/template.css");
 		FileWriter f = new FileWriter(css);
-		f.write("h1 {text-align: center;}");
+		f.write("h1 {\n/ttext-align: center;\n\tfont-size: 1.6em\n}\n\n.frontmatter {\n  font-family: \"Helvetica\", sans-serif;\n  font-weight: lighter;\n}\n\nli{\n  list-style: none;\n  font-family: \"Helvetica\", sans-serif;\n  line-height: 1.35em;\n  font-size: 1.1em;\n  text-decoration: none;\n  font-weight: lighter;\n}\n\np {line-height: 1.53em; font-size: 1em;}\na {text-decoration: none;}\na:link    { color: #00d9ff }\na:visited { color: #00d9ff } ");
 		f.close();
 		css.createNewFile();
 	}

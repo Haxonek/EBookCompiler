@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Scanner;
 
 public class Section {
 
@@ -17,19 +18,38 @@ public class Section {
 	 * @throws IOException Likely thrown if you encounter an error opening a file
 	 *  
 	 * */
-	public void makeChapter(String[] fn) throws IOException {
+	public void makeChapters(String[] fn) throws IOException {
+		File chpt;
+		FileWriter f;
+		Scanner out;
+		String line;
 		
 		for (int i = 0; i < fn.length; i++) {
-			// find the file and open it up
+			// read in file from input
+			out = new Scanner(new File(fn[i]));
 			
-			// create the new .xhtml file
+			// create the new file & setup file
+			chpt = new File("EPUB/OEPBS/chapter_" + (i + 1) + ".xhtml");
+			f = new FileWriter(chpt);
 			
-			// add the new file, adding html as we go along + the chapter name
+			// Add file header (title)
+			f.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<html xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:epub=\"http://www.idpf.org/2007/ops\">\n<head>\n<title>chapter_" + (i + 1) + ".xhtml</title>\n<link href=\"CSS/template.css\" rel=\"stylesheet\" type=\"text/css\" />\n</head>\n\n<body>\n\n");
+			f.write("\t<h1>Chapter " + (i + 1) + "</h1>\n\n");
+			
+			// add file, formatting as we progress
+			while (out.hasNextLine()) {
+				line = out.nextLine().trim();
+				if (!line.equals("")) {
+					f.write("\t<p>" + line + "</p>\n\n");
+				} 
+			}
+			f.write("</body>\n</html>\n");
+			out.close();
+			f.close();
 		}
-		
 	}
 	
-	public void makeChapter() throws IOException {
+	public void exampleChapters() throws IOException {
 		
 		/**
 		 * The way this will be set up is we'll pass a List of file names

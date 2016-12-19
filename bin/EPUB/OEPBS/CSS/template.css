@@ -1,0 +1,23 @@
+h1 {
+/ttext-align: center;
+	font-size: 1.6em
+}
+
+.frontmatter {
+  font-family: "Helvetica", sans-serif;
+  font-weight: lighter;
+}
+
+li{
+  list-style: none;
+  font-family: "Helvetica", sans-serif;
+  line-height: 1.35em;
+  font-size: 1.1em;
+  text-decoration: none;
+  font-weight: lighter;
+}
+
+p {line-height: 1.53em; font-size: 1em;}
+a {text-decoration: none;}
+a:link    { color: #00d9ff }
+a:visited { color: #00d9ff } 

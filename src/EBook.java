@@ -2,7 +2,6 @@ import java.util.Scanner;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
@@ -29,33 +28,31 @@ public class EBook {
 		
 		EBook eb = new EBook();
 		
-		System.out.println("Please enter some general information:");
+		System.out.println("Please enter some general information.");
 		
 		// Read in static information
 		System.out.print("Book Title: ");
 		String title = eb.in.nextLine();
 		System.out.print("Author Name: ");
 		String author = eb.in.nextLine();
-		
+
 		eb.overHead = new OverHead(title, author);
-		Section sections = new Section();
-		
-		// create a new section for each arg.  For now just use own text
-		
-		// add each to list of chapters
 		
 		// create ebook
-		eb.createEbook(eb.overHead);
-//		eb.createSections(sections);
+		eb.createEbook(eb.overHead, args.length);
 		
-		// zip up ebook
-//    	eb.generateFileList(new File("EPUB"));
-//    	eb.zipEBook(eb.overHead.getEpubName() + ".epub");
+		// create chapters for ebook
+		try {
+			Section s = new Section();
+			s.makeChapters(args);
+		} catch (IOException e) {
+			System.out.println("Error creating the chapters; still building.");
+		}		
 		
 		eb.in.close();
 	}
 
-	public void createEbook(OverHead oh) {
+	public void createEbook(OverHead oh, int numSections) {
 
 		// Set up initial folders and mimetype file
 		try {
@@ -78,38 +75,15 @@ public class EBook {
 			f.close();
 			
 			// create other files
-			oh.makeOverhead(2); // LATER RENDITION: args.length + 1
-			
-			// create the three chapters; will automate later
-			
+			oh.makeOverhead(numSections);
 			
 		} catch (IOException ie) {
 			ie.printStackTrace();
 		}
 		
-		Section s = new Section();
-		
-		// Add each of the section(s)
-		try {
-			// WILL BE DIFFERENT LATER
-			s.makeChapter();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
 		// zip up ebook and set file name
 		generateFileList(new File("EPUB"));
-    	zipEBook(overHead.getEpubName() + ".epub");
-    	
-	}
-	
-	public void createSections(Section s) {
-		try {
-			// WILL BE DIFFERENT LATER
-			s.makeChapter();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+    	zipEBook(overHead.getEpubName() + ".epub");	
 	}
 
 	/**
@@ -166,7 +140,7 @@ public class EBook {
      * @return the set filename for the ebook
      */
     public String getEbookName() {
-    	overHead.getEpubName();
+    	return overHead.getEpubName();
     }
 	
     /**
@@ -207,10 +181,30 @@ public class EBook {
     		//remember close it
     		zos.close();
 
-    		System.out.println("Done");
-    	}catch(IOException ex){
+//    		try {
+//    			// Delete the previous file structure
+//    			Path directory = Paths.get("/EPUB");
+//    			Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
+//    			   @Override
+//    			   public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+//    			       Files.delete(file);
+//    			       return FileVisitResult.CONTINUE;
+//    			   }
+//
+//    			   @Override
+//    			   public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+//    			       Files.delete(dir);
+//    			       return FileVisitResult.CONTINUE;
+//    			   }
+//    			});
+//    		} catch (IOException e) {
+//    			System.out.println("Error deleting unzipped files");
+//    		}
+    		
+    	} catch(IOException ex){
+    		System.out.println("Error zipping ebook.");
     		ex.printStackTrace();
-    	}
+    	}	
     }
 
     /**
