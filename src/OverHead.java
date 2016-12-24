@@ -50,6 +50,7 @@ public class OverHead {
 		try {
 			makeContent(numSections);
 			makeCSS();
+			makeTitlePage(numSections);
 			makeToc(numSections);
 			makeTox(numSections);
 			makeContainer();
@@ -67,7 +68,7 @@ public class OverHead {
 		// make css template
 		File css = new File("EPUB/OEPBS/CSS/template.css");
 		FileWriter f = new FileWriter(css);
-		f.write("h1 {\n/ttext-align: center;\n\tfont-size: 1.6em\n}\n\n.frontmatter {\n  font-family: \"Helvetica\", sans-serif;\n  font-weight: lighter;\n}\n\nli{\n  list-style: none;\n  font-family: \"Helvetica\", sans-serif;\n  line-height: 1.35em;\n  font-size: 1.1em;\n  text-decoration: none;\n  font-weight: lighter;\n}\n\np {line-height: 1.53em; font-size: 1em;}\na {text-decoration: none;}\na:link    { color: #00d9ff }\na:visited { color: #00d9ff } ");
+		f.write("h1 {\n/ttext-align: center;\n\tfont-size: 1.6em\n}\n\n.frontmatter {\n  font-family: \"Helvetica\", sans-serif;\n  font-weight: lighter;\n}\n\nli{\n  list-style: none;\n  font-family: \"Helvetica\", sans-serif;\n  line-height: 1.35em;\n  font-size: 1.1em;\n  text-decoration: none;\n  font-weight: lighter;\n}\n\np {line-height: 1.53em; font-size: 1em;}\na {text-decoration: none;}\na:link    { color: #00d9ff }\na:visited { color: #00d9ff } .book_title {font-size: 3em;width: 80%;margin: 100% auto;border-bottom: 4px solid #cdcdcd;font-family: serif;}.author_name {text-align: center;color: #333;font-family: sans-serif;}.chapter_count {font-size: .8em;text-align: center;color: #333;font-family: sans-serif;}");
 		f.close();
 		css.createNewFile();
 	}
@@ -84,7 +85,7 @@ public class OverHead {
 		// create file and add chapters to string, then add to content.opf
 		File content_opf = new File("EPUB/OEPBS/content.opf");
 		FileWriter f = new FileWriter(content_opf);
-		f.write("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<package xmlns=\"http://www.idpf.org/2007/opf\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" unique-identifier=\"db-id\" version=\"3.0\">\n\n\t<metadata>\n	    <dc:title id=\"t1\">" + title + "</dc:title>\n	    <dc:creator opf:role=\"aut\">" + author + "</dc:creator>\n	    <dc:identifier id=\"db-id\">isbn</dc:identifier>\n	    <meta property=\"dcterms:modified\">" + LocalDateTime.now() + "</meta>\n	    <dc:language>en</dc:language>\n	</metadata>\n\n	<manifest>\n	    <item id=\"toc\" properties=\"nav\" href=\"toc.xhtml\" media-type=\"application/xhtml+xml\" />\n	    <item id=\"ncx\" href=\"toc.ncx\" media-type=\"application/x-dtbncx+xml\" />\n	    <item id=\"template_css\" href=\"template.css\" media-type=\"text/css\" />\n	    <item id=\"toc\" href=\"toc.xhtml\" media-type=\"application/xhtml+xml\" />\n" + manifest_links + "	    <item id=\"copyright\" href=\"copyright.xhtml\" media-type=\"application/xhtml+xml\" />\n	</manifest>\n\n	<spine toc=\"ncx\">\n		<itemref idref=\"toc\" />\n" + spine_links + "	    <itemref idref=\"copyright\" />\n	</spine>\n\n</package>");
+		f.write("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<package xmlns=\"http://www.idpf.org/2007/opf\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" unique-identifier=\"db-id\" version=\"3.0\">\n\n\t<metadata>\n	    <dc:title id=\"t1\">" + title + "</dc:title>\n	    <dc:creator opf:role=\"aut\">" + author + "</dc:creator>\n	    <dc:identifier id=\"db-id\">isbn</dc:identifier>\n	    <meta property=\"dcterms:modified\">" + LocalDateTime.now() + "</meta>\n	    <dc:language>en</dc:language>\n	</metadata>\n\n	<manifest>\n	    <item id=\"toc\" properties=\"nav\" href=\"toc.xhtml\" media-type=\"application/xhtml+xml\" />\n	    <item id=\"ncx\" href=\"toc.ncx\" media-type=\"application/x-dtbncx+xml\" />\n	    <item id=\"template_css\" href=\"template.css\" media-type=\"text/css\" />\n	    <item id=\"toc\" href=\"toc.xhtml\" media-type=\"application/xhtml+xml\" />\n\t\t<item id=\"titlepage\" href=\"titlepage.xhtml\" media-type=\"application/xhtml+xml\" />\n" + manifest_links + "	    <item id=\"copyright\" href=\"copyright.xhtml\" media-type=\"application/xhtml+xml\" />\n	</manifest>\n\n	<spine toc=\"ncx\">\n		<itemref idref=\"toc\" />\n\t\t<itemref idref=\"titlepage\" />\n" + spine_links + "	    <itemref idref=\"copyright\" />\n	</spine>\n\n</package>");
 		f.close();
 		content_opf.createNewFile();
 	}
@@ -93,20 +94,29 @@ public class OverHead {
 		// creates the links and text in the table of contents
 		String toc_links = "";
 		for (int i = 1; i <= n; ++i) {
-			toc_links += "\t\t\t\t<li><a href=\"chapter_" + i + ".xhtml\">Chapter " + i + "</a></li>\n";
+			toc_links += "\t\t\t<li><a href=\"chapter_" + i + ".xhtml\">Chapter " + i + "</a></li>\n";
 		}
 		
 		File toc_xhtml = new File("EPUB/OEPBS/toc.xhtml");
 		FileWriter f = new FileWriter(toc_xhtml);
-		f.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<html xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:epub=\"http://www.idpf.org/2007/ops\">\n<head>\n<title>toc.xhtml</title>\n<link href=\"template.css\" rel=\"stylesheet\" type=\"text/css\" />\n</head>\n<body>\n    <nav id=\"toc\" epub:type=\"toc\">\n        <h1 class=\"frontmatter\">Table of Contents</h1>\n        <ol class=\"contents\">\n               " + toc_links + "               <li><a href=\"copyright.xhtml\">Copyright</a></li>\n        </ol>\n    </nav>\n</body>\n</html>");
+		f.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<html xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:epub=\"http://www.idpf.org/2007/ops\">\n<head>\n<title>toc.xhtml</title>\n<link href=\"template.css\" rel=\"stylesheet\" type=\"text/css\" />\n</head>\n<body>\n    <nav id=\"toc\" epub:type=\"toc\">\n        <h1 class=\"frontmatter\">Table of Contents</h1>\n        <ol class=\"contents\">\n\t\t\t<li><a href=\"titlePage.xhtml\">Title page</a></li>\n\t\t\t" + toc_links + "\t\t\t<li><a href=\"copyright.xhtml\">Copyright</a></li>\n        </ol>\n    </nav>\n</body>\n</html>");
 		f.close();
 		toc_xhtml.createNewFile();
 	}
 
 	private void makeTox(int n) throws IOException {
 		// creates the links and text in the table of contents
+		
 		String toc_tags = "";
-		for (int i = 1; i <= n; ++i) {
+		
+		toc_tags += "<navMap>\n";
+		toc_tags += "\t<navPoint id=\"titlepage\" playOrder=1>\n";
+		toc_tags += "\t\t<navLabel><text>Title page</text></navLabel>\n";
+		toc_tags += "\t\t<content src=\"titlepage.xhtml\" />\n";
+		toc_tags += "\t</navPoint>\n";
+		toc_tags += "</navMap>\n\n";
+		
+		for (int i = 2; i <= n+1; ++i) {
 			toc_tags += "<navMap>\n";
 			toc_tags += "\t<navPoint id=\"chapter_" + i + "\" playOrder=" + i + ">\n";
 			toc_tags += "\t\t<navLabel><text>Chapter " + i + "</text></navLabel>\n";
@@ -142,7 +152,25 @@ public class OverHead {
 		f.write("<h1>Copyright</h1><p>This is where copyright information could potentually go.</p>");
 		f.close();
 	}
+	
+	/**
+	 * This method should create the title page, which will display the title 
+	 * and then the author's name, as well as the number of chapters
+	 * 
+	 * @throws IOException Thrown if there's an error creating the file
+	 */
+	private void makeTitlePage(int numsections) throws IOException {
+		File container = new File("EPUB/OEPBS/titlepage.xhtml");
+		FileWriter f = new FileWriter(container);
+		f.write("<?xml version=\"1.0\" encoding=\"utf-8\"?><html xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:epub=\"http://www.idpf.org/2007/ops\"><head><title>" + title + "</title><link href=\"CSS/template.css\" rel=\"stylesheet\" type=\"text/css\" /></head><body><h1 class=\"book_title\">" + title + "</h1><h3 class=\"author_name\">" + author + "</h3><h5 class=\"chapter_count\">" + numsections + " Chapters</h5></body></html>");
+		f.close();
+	}
 
+	/**
+	 * Creates the same container file for each 
+	 * 
+	 * @throws IOException Thrown if there's an error creating the file
+	 */
 	private void makeContainer() throws IOException {
 		File container = new File("EPUB/META-INF/container.xml");
 		FileWriter f = new FileWriter(container);
