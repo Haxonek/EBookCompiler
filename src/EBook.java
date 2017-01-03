@@ -19,7 +19,13 @@ public class EBook {
 	public EBook() {
 		this("","","");
 	}
-	
+
+	/**
+	 * The main constructor method, asking for each value for the ebook to
+	 * create it.
+	 * 
+	 * @param 
+	 * */
 	public EBook(String title, String author, String epubName) {
 		overHead = new OverHead(title, author, epubName);
 	}
@@ -52,7 +58,11 @@ public class EBook {
 		eb.in.close();
 	}
 
-	public void createEbook(OverHead oh, int numSections) {
+	public void createEbook(String [] files) {
+		createEbook(overHead, files.length);
+	}
+	
+	private void createEbook(OverHead oh, int numSections) {
 
 		// Set up initial folders and mimetype file
 		try {
