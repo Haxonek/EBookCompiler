@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ncx version="2005-1" xml:lang="en" xmlns="http://www.daisy.org/z3986/2005/ncx/">
+
+<head>
+    <meta name="dtb:uid" content="isbn"/>
+    <meta name="dtb:depth" content="1"/>
+</head>
+
+<docTitle>
+    <text>Title</text>
+</docTitle>
+
+<navMap>
+	<navPoint id="titlepage" playOrder=1>
+		<navLabel><text>Title page</text></navLabel>
+		<content src="titlepage.xhtml" />
+	</navPoint>
+</navMap>
+
+<navMap>
+	<navPoint id="chapter_1" playOrder=2>
+		<navLabel><text>Chapter 1</text></navLabel>
+		<content src="chapter_1.xhtml" />
+	</navPoint>
+</navMap>
+
+<navMap>
+	<navPoint id="chapter_2" playOrder=3>
+		<navLabel><text>Chapter 2</text></navLabel>
+		<content src="chapter_2.xhtml" />
+	</navPoint>
+</navMap>
+
+<navMap>
+	<navPoint id="chapter_3" playOrder=4>
+		<navLabel><text>Chapter 3</text></navLabel>
+		<content src="chapter_3.xhtml" />
+	</navPoint>
+</navMap>
+
+<navMap>
+    <navPoint id="copyright" playOrder="5">
+        <navLabel><text>Copyright</text></navLabel>
+        <content src="copyright.xhtml" />
+    </navPoint>
+</navMap>
+
+</ncx>
