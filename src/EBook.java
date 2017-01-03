@@ -16,17 +16,26 @@ public class EBook {
 	Scanner in = new Scanner(System.in);
 	OverHead overHead;
 	
+	/**
+	 * Sets all the functinos to "", you must set the title, author name, and 
+	 * file name.  Blank files will be named EPUB.epub.
+	 */
 	public EBook() {
-		this("","","");
+		this("","","EPUB");
 	}
 
 	/**
 	 * The main constructor method, asking for each value for the ebook to
 	 * create it.
 	 * 
-	 * @param 
+	 * @param title The title of the book
+	 * @param author The author of the .epub being created
+	 * @param epubName The name of the file that will be created (i.e. the filename)
 	 * */
 	public EBook(String title, String author, String epubName) {
+		if (epubName.trim().equals("")) {
+			epubName = "EPUB";
+		}
 		overHead = new OverHead(title, author, epubName);
 	}
 	
