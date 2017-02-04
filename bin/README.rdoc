@@ -1,0 +1,13 @@
+= What this can do
+
+From here you can probably see the different .class directories, which were created on my Mac 10.12.3, however that shouldn't matter too much.  In the vendor folder (labeled as such to prevent github from tracking the files as part of the code) should be the compiled ebook, the files in the compiled ebook EPUB/ as well as the example text used.
+
+To run this you could move the example/ folder into the same directories as the .class files, and then run from your command line
+
+	java EBook example/text_1.txt example/text_2.txt example/text_3.txt example/text_4.txt
+
+This should run and compile both the ebook and the /EPUB folder.  As of 02/03/17 there is not way to avoid making the EPUB/ folder however I'll probably add the functionality soon.
+
+If you want to edit the book, you may do so from the EPUB/ folder and then compress into a zip and rename as yourname.epub
+
+I hope you enjoy using this project and making it better!
